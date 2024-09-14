@@ -38,7 +38,10 @@ public class Main {
         for (List<ChapterRequest> job : jobs) {
             new Thread(new Worker(
                     d -> Arrays.stream(d.findElement(By.className("post-body"))
-                                    .getText().split("\n\n"))
+                                    .getText()
+                                    .replaceAll("<", "&lt;")
+                                    .replaceAll(">", "&gt;")
+                                    .split("\n\n"))
                             .toList()
                             .stream()
                             .filter(p -> !p.startsWith("Synopsis:") &&
